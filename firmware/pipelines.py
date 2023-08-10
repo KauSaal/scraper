@@ -199,7 +199,15 @@ class FirmwarePipeline(FilesPipeline):
             """
             json_item = dict()
             try:
-                full_analist = ['binwalk', 'cpu_architecture', 'crypto_hints', 'crypto_material', 'cve_lookup', 'cwe_checker', 'device_tree', 'elf_analysis', 'exploit_mitigations', 'file_hashes', 'file_system_metadata', 'file_type', 'hardware_analysis', 'hashlookup', 'information_leaks', 'init_systems', 'input_vectors', 'interesting_uris', 'ip_and_uri_finder', 'ipc_analyzer', 'kernel_config', 'known_vulnerabilities', 'printable_strings', 'qemu_exec', 'software_components', 'source_code_analysis', 'string_evaluator', 'tlsh', 'users_and_passwords']
+                full = ['binwalk', 'cpu_architecture', 'crypto_hints', 'crypto_material',
+                                'cve_lookup', 'cwe_checker', 'device_tree', 'elf_analysis',
+                                'exploit_mitigations', 'file_hashes', 'file_system_metadata',
+                                'file_type', 'hardware_analysis', 'hashlookup', 'information_leaks',
+                                'init_systems', 'input_vectors', 'interesting_uris',
+                                'ip_and_uri_finder', 'ipc_analyzer', 'kernel_config',
+                                'known_vulnerabilities', 'printable_strings',
+                                'qemu_exec', 'software_components',
+                                'source_code_analysis', 'string_evaluator', 'tlsh', 'users_and_passwords']
                 json_item['device_name'] = item['product']
                 json_item['device_part'] = "complete"
                 json_item['device_class'] = item['category']
@@ -221,7 +229,7 @@ class FirmwarePipeline(FilesPipeline):
                     with open("./output/" + str(json_item['device_name']) + "_" + str(json_item['version']) + "_" + buildnumber + ".json", "w") as f:
                         json.dump(json_item, f)
                     unpacker.clean_up()
-                    #self.fact_rest.put_fw(json_item)
+                    self.fact_rest.put_fw(json_item)
 
             except Exception as e:
                 print(e)

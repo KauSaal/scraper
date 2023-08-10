@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 '''TODO:
     -Add additional archive types if necessary, for the scope of TP-Link it's enough to have zip and rar
-    -add additional binary types if necessary, for scope TP-Link .bin is enough but other vendors could have .img or similar
+    -add additional binary types if necessary, for scope TP-Link, Edimax .bin and .img is enough but other vendors could have other formats
     -Code the clean_up method, see TODO beyond'''
 class Unpacker:
     def __init__(self, firmware_image):
@@ -38,13 +38,13 @@ class Unpacker:
             case "zip":
                 with zipfile.ZipFile(self.packed_file, 'r') as zip_ref:
                     for name in zip_ref.namelist():
-                        if name.endswith(".bin"):
+                        if name.endswith(".bin") or name.endswith(".img"):
                             self.binary = name
                             return True
             case "rar":
                 with rarfile.RarFile(self.packed_file, 'r') as rar_ref:
                     for name in rar_ref.namelist():
-                        if name.endswith(".bin"):
+                        if name.endswith(".bin") or name.endswith(".img"):
                             self.binary = name
                         return True
         return False
